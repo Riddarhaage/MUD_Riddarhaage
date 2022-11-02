@@ -47,7 +47,7 @@ namespace dtp8_MUD_0
         {
             adjacent[North] = N; adjacent[East] = E; adjacent[South] = S; adjacent[West] = W;
         }
-        public int GetNorth() => adjacent[North];
+        public int GetNorth() => adjacent[North];        
         public int GetEast() => adjacent[East];
         public int GetSouth() => adjacent[South];
         public int GetWest() => adjacent[West];
@@ -80,7 +80,7 @@ namespace dtp8_MUD_0
             R = new Room(2, "ett litet rum med en trappa norrut");
             R.SetStory("Du hör skrämmande ljud från nedre våningen");
             R.SetImage("trappa.png");
-            R.SetDirections(N: 3, E: Room.NoDoor, S: 1, W: Room.NoDoor);
+            R.SetDirections(N: Room.NoDoor, E: Room.NoDoor, S: 1, W: Room.NoDoor);
             labyrinth[2] = R;
 
             R = new Room(3, "Skruttigt rum med en låst dörr"); //Ändra låst till öppen om den öppnats med nyckel TBD
@@ -106,29 +106,36 @@ namespace dtp8_MUD_0
             // output += ", ";
             // output += AppDomain.CurrentDomain.BaseDirectory;
             KeyPressDisplay.Text = output;
-
-            if(e.Key == Key.Escape)
+            try
             {
-                System.Windows.Application.Current.Shutdown();
+                if (e.Key == Key.Escape)
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }
+                else if (e.Key == Key.Up)
+                {
+                    currentRoom = labyrinth[currentRoom].GetNorth();
+                    DisplayCurrentRoom();
+                }
+                else if (e.Key == Key.Down)
+                {
+                    currentRoom = labyrinth[currentRoom].GetSouth();
+                    DisplayCurrentRoom();
+                }
+                else if (e.Key == Key.Right)
+                {
+                    currentRoom = labyrinth[currentRoom].GetEast();
+                    DisplayCurrentRoom();
+                }
+                else if (e.Key == Key.Left)
+                {
+                    currentRoom = labyrinth[currentRoom].GetWest();
+                    DisplayCurrentRoom();
+                }
             }
-            else if(e.Key == Key.Up)
+            catch (System.IndexOutOfRangeException)
             {
-                currentRoom = labyrinth[currentRoom].GetNorth();
-                DisplayCurrentRoom();
-            }
-            else if (e.Key == Key.Down)
-            {
-                currentRoom = labyrinth[currentRoom].GetSouth();
-                DisplayCurrentRoom();
-            }
-            else if (e.Key == Key.Right)
-            {
-                currentRoom = labyrinth[currentRoom].GetEast();
-                DisplayCurrentRoom();
-            }
-            else if (e.Key == Key.Left)
-            {
-                currentRoom = labyrinth[currentRoom].GetWest();
+                currentRoom = 0;
                 DisplayCurrentRoom();
             }
         }
