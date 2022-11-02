@@ -52,6 +52,11 @@ namespace dtp8_MUD_0
         public int GetSouth() => adjacent[South];
         public int GetWest() => adjacent[West];
     }
+    class Hero
+    {
+        public string name;
+        public int healthPoints = 100;
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
