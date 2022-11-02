@@ -77,6 +77,24 @@ namespace dtp8_MUD_0
             R.SetDirections(N: 2, E: 3, S: 0, W: 4);
             labyrinth[1] = R;
 
+            R = new Room(2, "ett litet rum med en trappa norrut");
+            R.SetStory("Du hör skrämmande ljud från nedre våningen");
+            R.SetImage("trappa.png");
+            R.SetDirections(N: 3, E: Room.NoDoor, S: 1, W: Room.NoDoor);
+            labyrinth[2] = R;
+
+            R = new Room(3, "Skruttigt rum med en låst dörr"); //Ändra låst till öppen om den öppnats med nyckel TBD
+            R.SetStory("Dörren norrut är låst");//samma som ovan TBD
+            R.SetImage("ingang-stangd.png");
+            R.SetDirections(N: 3, E: Room.NoDoor, S: 1, W: Room.NoDoor);
+            labyrinth[3] = R;
+
+            R = new Room(4, "rum med monster");
+            R.SetStory("HJÄLP! VÄND OM!");
+            R.SetImage("septopus.png");
+            R.SetDirections(N: Room.NoDoor, E: Room.NoDoor, S: 1, W: Room.NoDoor);
+            labyrinth[4] = R;
+
             currentRoom = 0;
             DisplayCurrentRoom();
         }
@@ -96,6 +114,21 @@ namespace dtp8_MUD_0
             else if(e.Key == Key.Up)
             {
                 currentRoom = labyrinth[currentRoom].GetNorth();
+                DisplayCurrentRoom();
+            }
+            else if (e.Key == Key.Down)
+            {
+                currentRoom = labyrinth[currentRoom].GetSouth();
+                DisplayCurrentRoom();
+            }
+            else if (e.Key == Key.Right)
+            {
+                currentRoom = labyrinth[currentRoom].GetEast();
+                DisplayCurrentRoom();
+            }
+            else if (e.Key == Key.Left)
+            {
+                currentRoom = labyrinth[currentRoom].GetWest();
                 DisplayCurrentRoom();
             }
         }
